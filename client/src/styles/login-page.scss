@@ -1,0 +1,101 @@
+.login-page-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  img {
+    height: 100vh;
+    margin-left: 30px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .main-log-form {
+    display: grid;
+    justify-items: center;
+    width: 451px;
+    height: 528px;
+    gap: 36px;
+    margin: 0 auto;
+    margin-top: 10%;
+    .login-question {
+      display: flex;
+      gap: 5px;
+      .highlight {
+        color: #937100;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+    .form-body {
+      header {
+        display: grid;
+        gap: 8px;
+        & > h1 {
+          color: #937100;
+          font-weight: 600;
+          font-size: 56px;
+          line-height: 66px;
+        }
+        & > h3 {
+          color: #6e6d6d;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 34px;
+        }
+      }
+      .rememberMe{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        font-size: 14px;
+        div{
+            display: flex;
+            gap: 5px;
+        }
+      }
+    }
+    .form-data {
+      display: grid;
+      width: 451px;
+      height: 216;
+      gap: 36px;
+      margin-top: 36px;
+
+      .form-section {
+        display: flex;
+        flex-direction: column;
+        width: 451px;
+        height: 90;
+        gap: 8px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: 0px;
+        color: #000000;
+        input,
+        select {
+          height: 54;
+          gap: 8px;
+          padding-top: 17px;
+          padding-right: 24px;
+          padding-bottom: 17px;
+          padding-left: 24px;
+          border-radius: 12px;
+          border-width: 1px;
+          background: #7e6a2514;
+          border: 1px solid #bdbdbd;
+        }
+      }
+    }
+  }
+  button {
+    width: 451;
+    height: 54;
+    gap: 8px;
+    padding-top: 13px;
+    padding-right: 197px;
+    padding-bottom: 13px;
+    padding-left: 197px;
+    border-radius: 12px;
+
+    background: #ffcd29;
+  }
+}
