@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, Body } from '@nestjs/common';
+import { Controller, Get, Req, Res, Body, Query } from '@nestjs/common';
 import { Response } from 'express';
 import { SongService } from './song.service';
 
@@ -8,8 +8,9 @@ export class SongController {
     constructor(private readonly songService: SongService) { }
 
     @Get()
-    async getSongs(@Req() req, @Body() dto: any, @Res() res: Response){
-            const songs = await this.songService.getSongs(dto)
+    async getSongs(@Query() params: any, @Res() res: Response){
+        console.log("I got here")
+            const songs = await this.songService.getSongs(params)
             return res.json(songs)
     }
 }

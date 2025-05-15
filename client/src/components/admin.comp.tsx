@@ -3,7 +3,7 @@ import { socket } from "../services/socket.service";
 import { useNavigate } from "react-router";
 
 function AdminPageComponent({ songsList }: any) {
-  const [songs, setSongs] = useState<any[]>([]);
+  const [songs, setSongs] = useState<any[]>(songsList);
   const [query, setQuery] = useState<string>("");
   const navigate = useNavigate();
 
@@ -19,23 +19,33 @@ function AdminPageComponent({ songsList }: any) {
 
   const changeQuery = (e: any) => setQuery(e.target.value);
 
-  function handleSongChosen(song: any){
-    socket.emit("set song back", song)
-    navigate("/")
+  function handleSongChosen(song: any) {
+    socket.emit("set song back", song);
+    navigate("/");
   }
 
   return songs ? (
     <div className="recommended-container">
       <div className="search-box">
-        <input onChange={changeQuery} type="text" placeholder="Search any song..." />
+        <input
+          onChange={changeQuery}
+          type="text"
+          placeholder="Search any song..."
+        />
         <span className="search-icon">🔍</span>
       </div>
 
       {/* List */}
       <h3>Recommended song list</h3>
       <div className="song-list">
+        sfsdfsdgfsdrfgsegtetr
+        <button onClick={() => console.log("ddfsdf", songs)}>click</button>
         {songs.map((song, index) => (
-          <div onClick={() => handleSongChosen(song)} className="song-item" key={index}>
+          <div
+            onClick={() => handleSongChosen(song)}
+            className="song-item"
+            key={index}
+          >
             <div className="song-info">
               <img src={song.img} alt={song.title} />
               <span>{song.title}</span>

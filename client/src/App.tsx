@@ -26,16 +26,21 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    async function validateHandler() {
-      const data = await validateUser();
-      setLoggedInUser(data);
-    }
-    validateHandler().then(async () => {
-      const songs = await getScrapedSongs();
-      setSongsList(songs);
-    });
-  }, []);
+useEffect(() => {
+  async function init() {
+    console.log("ma kore");
+
+    const data = await validateUser();
+    console.log(data);
+    setLoggedInUser(data);
+    console.log("hiiiiii")
+    const songs = await getScrapedSongs();
+    console.log('sfouighsdifyg')
+    setSongsList(songs);
+  }
+
+  init();
+}, []);
 
   return (
     <BrowserRouter>

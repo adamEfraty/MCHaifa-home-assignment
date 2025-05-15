@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: my-fullstack-app
+    env: node
+    buildCommand: |
+      cd client && npm install && npm run build
+      cd ../server && npm install && npm run build
+      cp -r ../client/build ./client-build
+    startCommand: node dist/main
+    rootDir: server

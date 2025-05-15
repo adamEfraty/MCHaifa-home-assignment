@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { handleEmitter, socket } from "../services/socket.service";
+import { handleEmitter } from "../services/socket.service";
 import type { SongModel } from "../models/song.model";
 import { useNavigate } from "react-router";
 
