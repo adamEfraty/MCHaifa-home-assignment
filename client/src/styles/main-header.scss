@@ -1,0 +1,29 @@
+.main-header {
+  display: flex;
+  background: #0d0402;
+  width: 100vw;
+  height: 64px;
+  justify-content: space-between;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-width: 1.5px;
+  padding-top: 12px;
+  padding-right: 48px;
+  padding-bottom: 12px;
+  padding-left: 48px;
+  img {
+    border-radius: 50%;
+    width: 40px;
+    height: auto;
+  }
+  .JaMoveo-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffcd29;
+    font-weight: 600;
+    font-size: 28px;
+    leading-trim: Cap height;
+    line-height: 100%;
+  }
+}

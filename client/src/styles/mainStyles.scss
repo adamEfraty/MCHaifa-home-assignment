@@ -1,8 +1,17 @@
 @use "login-page";
+@use "main-page";
+@use "main-header";
+@use "admin-page";
 
 
 *{
     margin: 0;
     padding: 0;
     box-sizing:border-box;
+}
+
+.error-msg {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }

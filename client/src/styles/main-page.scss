@@ -1,0 +1,75 @@
+.main-page {
+  height: 100vh;
+  .inner-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 80%;
+    margin: 2.5% auto;
+    border: 2px solid #aaa;
+    border-radius: 12px;
+    background-color: #fdfbf6;
+    text-align: center;
+    div {
+      h2 {
+        font-weight: 500;
+        font-size: 38px;
+        line-height: 66px;
+      }
+    }
+    .music-symbol{
+        font-size: 2rem;
+        color: #f5b700
+    }
+  }
+    .dashed-border{
+    border: 2px dashed #aaa;
+  }
+}
+
+
+
+.inner-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fdfdfd;
+}
+
+.song-display {
+  height: 85%;
+  overflow-y: hidden;
+  padding: 2rem;
+  width: 100%;
+  background-color: transparent;
+  direction: rtl;
+  font-family: sans-serif;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    line-height: 1.8;
+  }
+
+  span {
+    display: inline;
+    white-space: pre-wrap;
+  }
+}
+
+
+.btn-section {
+  margin-top: 1rem;
+
+  button {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}
