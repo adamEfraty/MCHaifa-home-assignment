@@ -104,3 +104,31 @@
     cursor: pointer;
   }
 }
+
+
+  @media (max-width: 600px) {
+    .chords {
+      font-size: 14px;
+    }
+    .lyrics {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .chords {
+      font-size: 12px;
+    }
+    .lyrics {
+      font-size: 12px;
+    }
+  }
+
+    @media (max-width: 350px) {
+    .chords {
+      font-size: 10px;
+    }
+    .lyrics {
+      font-size: 10px;
+    }
+  }

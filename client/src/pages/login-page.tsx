@@ -15,7 +15,7 @@ function LogPage() {
   const { adminUrl } = useParams();
   const { width, height } = useScreenSize();
 
-  const instrumentOptions = ["Guitar", "Bass", "Drum", "Singer"];
+  const instrumentOptions = ["Guitar", "Ukilaly", "Bass", "Drum", "Singer"];
 
   async function handleRegister(values: any) {
     try {
