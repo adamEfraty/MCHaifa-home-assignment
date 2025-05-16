@@ -1,6 +1,6 @@
 export interface SongModel {
   _id: any;
-  artists: string;
+  artist: string;
   title: string;
   songLines: {
     chords: string;

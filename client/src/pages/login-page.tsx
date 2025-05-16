@@ -157,11 +157,13 @@ function LogPage() {
       {width < 800 || height < 600 ? (
         ""
       ) : (
-        <img
-          src={`images/${
-            isRegister ? "register-image.png" : "login-image.png"
-          }`}
-        />
+        <div className="image-side">
+          <img
+            src={`images/${
+              isRegister ? "register-image.png" : "login-image.png"
+            }`}
+          />
+        </div>
       )}
     </section>
   );

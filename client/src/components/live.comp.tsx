@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { handleEmitter } from "../services/socket.service";
 import type { SongModel } from "../models/song.model";
 import { useNavigate } from "react-router";
+import { useScreenSize } from "../custom-hooks/screenSize";
+import { handleLongText } from "../services/util.service";
 
 function LivePageComponent({
   isAdmin,
@@ -16,7 +18,8 @@ function LivePageComponent({
   const scrollInterval = useRef<NodeJS.Timeout | null>(null);
   const scrollingRef = useRef(true);
   const [scrolling, setScrolling] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { width } = useScreenSize();
 
   useEffect(() => {
     if (!scrollRef.current || !scrolling || !song) return;
@@ -38,7 +41,7 @@ function LivePageComponent({
   }, [scrolling, song]);
 
   const quitSong = () => {
-    navigate("/admin")
+    navigate("/admin");
     handleEmitter("set song back", null);
   };
 
@@ -56,25 +59,23 @@ function LivePageComponent({
     scrollingRef.current = true;
   };
 
+  useEffect(() => {
+    console.log(song);
+  }, []);
+
   return song ? (
     <section className="inner-main">
+      <section className={`song-header ${width < 500 ? "column" : ""}`}>
+        <h2 className="title">{handleLongText(song.title, width / 1.8)}</h2>
+        <h2>{song.artist}</h2>
+      </section>
       <section className="song-display" ref={scrollRef}>
         {song.songLines.map((line, lineIndex) => (
           <div key={lineIndex}>
             {instrument !== "Singer" && line.chords && (
-              <span
-                style={{
-                  textAlign: "start",
-                  display: "block",
-                  color: "#fbbf24", // yellow
-                  fontWeight: "bold",
-                  marginLeft: "0.25rem",
-                }}
-              >
-                {line.chords}
-              </span>
+              <span className="chords">{line.chords}</span>
             )}
-            <span>{line.lyrics}</span>
+            <span className="lyrics">{line.lyrics}</span>
           </div>
         ))}
       </section>
