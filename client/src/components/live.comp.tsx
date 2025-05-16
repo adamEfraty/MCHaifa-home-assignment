@@ -59,10 +59,6 @@ function LivePageComponent({
     scrollingRef.current = true;
   };
 
-  useEffect(() => {
-    console.log(song);
-  }, []);
-
   return song ? (
     <section className="inner-main">
       <section className={`song-header ${width < 500 ? "column" : ""}`}>
@@ -90,7 +86,7 @@ function LivePageComponent({
     <section className="inner-main dashed-border">
       <div>
         <img width={125} src="images/song-icon.png" />
-        <h2>Waiting for next song...</h2>
+        <h2 className="waiting-msg">Waiting for next song...</h2>
       </div>
     </section>
   );

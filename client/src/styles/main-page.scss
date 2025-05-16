@@ -14,20 +14,28 @@
     background-color: #fdfbf6;
     text-align: center;
 
-    .song-header{
+    .waiting-msg {
+      color: #1f2d3d !important; // or any dark color that contrasts your background
+      font-size: 38px;
+      font-weight: 500;
+      line-height: 66px;
+      text-align: center;
+    }
+
+    .song-header {
       display: flex;
       width: 100%;
       justify-content: space-between;
       padding: 8px;
       margin-bottom: 5px;
       border-bottom: 2px solid rgb(144, 140, 140);
-      .title{
+      .title {
         color: #f5b700;
       }
     }
-          .column{
-        flex-direction: column;
-      }
+    .column {
+      flex-direction: column;
+    }
     div {
       h2 {
         font-weight: 500;
