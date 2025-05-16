@@ -18,7 +18,7 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtService: JwtService,
   ) {
-    const secret = process.env.ENCRYPTION_KEY;
+    const secret = "o9d3DJ8KbK6YvDd0a9Trz43Yrkmn53BJ7IV5VNlyrA8";
     if (!secret) {
       throw new Error('ENCRYPTION_KEY is not set in environment variables');
     }
