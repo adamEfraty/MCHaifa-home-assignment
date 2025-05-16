@@ -7,9 +7,8 @@ export class SongController {
 
     constructor(private readonly songService: SongService) { }
 
-    @Get()
+    @Get('songs')
     async getSongs(@Query() params: any, @Res() res: Response){
-        console.log("I got here")
             const songs = await this.songService.getSongs(params)
             return res.json(songs)
     }

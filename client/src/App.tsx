@@ -28,14 +28,10 @@ function App() {
 
 useEffect(() => {
   async function init() {
-    console.log("ma kore");
 
     const data = await validateUser();
-    console.log(data);
     setLoggedInUser(data);
-    console.log("hiiiiii")
     const songs = await getScrapedSongs();
-    console.log('sfouighsdifyg')
     setSongsList(songs);
   }
 

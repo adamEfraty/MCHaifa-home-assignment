@@ -88,7 +88,7 @@ function LivePageComponent({
   ) : (
     <section className="inner-main dashed-border">
       <div>
-        <div className="music-symbol">🎵</div>
+        <img width={125} src="images/song-icon.png" />
         <h2>Waiting for next song...</h2>
       </div>
     </section>

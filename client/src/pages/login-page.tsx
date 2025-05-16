@@ -1,52 +1,47 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useParams } from "react-router";
-import { setUserSession } from "../services/user.service";
+import { login, register } from "../services/user.service";
 import {
   loginValidationSchema,
   regValidationSchema,
 } from "../schema/yupValidation";
-import { httpService } from "../services/http.service";
+import { useScreenSize } from "../custom-hooks/screenSize";
+import HeadphonesOutlinedIcon from "@mui/icons-material/HeadphonesOutlined";
 
 function LogPage() {
   const [isRegister, setIsRegister] = useState<boolean>(true);
   const [loginError, setLoginError] = useState<string>("");
   const { adminUrl } = useParams();
+  const { width, height } = useScreenSize();
 
   const instrumentOptions = ["Guitar", "Bass", "Drum", "Singer"];
 
   async function handleRegister(values: any) {
-    async function register() {
-      const data = await httpService.post("auth/register", {
-        ...values,
-        role: adminUrl ? "admin" : "user",
-      });
-      setUserSession(data);
+    try {
+      await register(values, adminUrl);
+      console.log(values, adminUrl);
+      adminUrl
+        ? (window.location.href = "/admin")
+        : (window.location.href = "/");
+    } catch (err) {
+      console.error("Register error:", err);
     }
-    register()
-      .then(() => {
-        window.location.href = "/"
-      })
-      .catch((err) => {
-        console.error("Register error:", err);
-      });
   }
 
   async function handleLogin(values: any) {
-    async function login() {
-      const data = await httpService.post("auth/login", values);
-      setUserSession(data);
+    try {
+      const data = await login(values);
+      console.log(data);
+      data.role === "admin"
+        ? (window.location.href = "/admin")
+        : (window.location.href = "/");
+    } catch (err: any) {
+      if (err.status == 401) {
+        setLoginError(err.response.data.err);
+        setTimeout(() => setLoginError(""), 4000);
+      }
     }
-    login()
-      .then(() => {
-        window.location.href = "/"
-      })
-      .catch((err) => {
-        if (err.status == 401) {
-          setLoginError(err.response.data.err);
-          setTimeout(() => setLoginError(""), 4000);
-        }
-      });
   }
 
   const toggleState = () => setIsRegister(!isRegister);
@@ -66,6 +61,14 @@ function LogPage() {
       >
         {({ isSubmitting }) => (
           <Form className="main-log-form">
+            {width < 800 || height < 600 ? (
+              <section className="login-title">
+                <HeadphonesOutlinedIcon style={{ fontSize: 60 }} />
+                <h1>JAMOVEO</h1>
+              </section>
+            ) : (
+              ""
+            )}
             <div className="form-body">
               <header>
                 <h3>Welcome to jaMoveo!</h3>
@@ -151,9 +154,15 @@ function LogPage() {
           </Form>
         )}
       </Formik>
-      <img
-        src={`images/${isRegister ? "register-image.png" : "login-image.png"}`}
-      />
+      {width < 800 || height < 600 ? (
+        ""
+      ) : (
+        <img
+          src={`images/${
+            isRegister ? "register-image.png" : "login-image.png"
+          }`}
+        />
+      )}
     </section>
   );
 }

@@ -28,7 +28,7 @@ export class SongGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('set song back')
   handleMessage(@MessageBody() song: string, @ConnectedSocket() client: Socket) {
-    this.server.emit('set song front', song); // 🔥 This includes all clients
+        this.server.emit('set song front', song); // 🔥 This includes all clients
     return song;
   }
 }

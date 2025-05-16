@@ -1,7 +1,8 @@
 .main-header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #0d0402;
-  width: 100vw;
   height: 64px;
   justify-content: space-between;
   border-bottom-right-radius: 8px;
@@ -16,6 +17,7 @@
     width: 40px;
     height: auto;
   }
+
   .JaMoveo-logo {
     display: flex;
     align-items: center;
