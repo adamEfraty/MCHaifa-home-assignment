@@ -6,6 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { SongModule } from './api/song/song.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
@@ -13,9 +15,7 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'client-build'),
     }),
     AuthModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://mrEfraty:nqQaOqQjZtx0i6nJ@mchaifa-project.i0uojfl.mongodb.net/',
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URI || ''),
     SongModule,
   ],
   controllers: [AppController],

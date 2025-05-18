@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 import { validateUser } from "./services/user.service";
 import { getScrapedSongs } from "./services/songs.service";
 import { socket } from "./services/socket.service";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<UserModel | null>(null);
   const [songsList, setSongsList] = useState<any[]>([]);
   const [songToPlay, setSongToPlay] = useState<any>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     socket.on("set song front", (msg: any) => {
@@ -26,19 +28,23 @@ function App() {
     };
   }, []);
 
-useEffect(() => {
-  async function init() {
+  useEffect(() => {
+    async function init() {
+      const data = await validateUser();
+      setLoggedInUser(data);
+      const songs = await getScrapedSongs();
+      setSongsList(songs);
+      setIsLoading(false)
+    }
 
-    const data = await validateUser();
-    setLoggedInUser(data);
-    const songs = await getScrapedSongs();
-    setSongsList(songs);
-  }
+    init();
+  }, []);
 
-  init();
-}, []);
-
-  return (
+  return isLoading ? (
+    <div className="flex-center h-view">
+      <ClipLoader color="#36d7b7" size={250} />
+    </div>
+  ) : (
     <BrowserRouter>
       {loggedInUser?.username ? (
         <Routes>

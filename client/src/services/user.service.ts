@@ -1,7 +1,7 @@
 import type { UserModel } from "../models/user.model";
 import { httpService } from "./http.service";
 
-const STORAGE_KEY_LOGGEDIN_USER = "loggedInUser";
+const STORAGE_KEY_LOGGEDIN_USER = import.meta.env.VITE_LOGGEDIN || "";
 
 export function getLoggedinUser(): any {
   const session = sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER);
