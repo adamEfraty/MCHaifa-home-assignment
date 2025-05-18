@@ -9,14 +9,12 @@ import { useScreenSize } from "../custom-hooks/screenSize";
 import HeadphonesOutlinedIcon from "@mui/icons-material/HeadphonesOutlined";
 import { FormGenerator } from "../components/login-form";
 import type { formDataModel } from "../models/form.model";
-import { useNavigate } from "react-router";
 
 export default function LogPage() {
   const [isRegister, setIsRegister] = useState<boolean>(true);
   const [loginError, setLoginError] = useState<string>("");
   const { adminUrl } = useParams();
   const { width, height } = useScreenSize();
-  const navigate = useNavigate();
 
   const instrumentOptions = ["Guitar", "Ukilaly", "Bass", "Drum", "Singer"];
 
@@ -51,7 +49,7 @@ export default function LogPage() {
     try {
       await register(values, adminUrl);
       console.log(values, adminUrl);
-      navigate(`/${adminUrl && "admin"}`);
+      window.location.href = adminUrl ? "/admin" : "/" 
     } catch (err) {
       console.error("Register error:", err);
     }
@@ -61,7 +59,7 @@ export default function LogPage() {
   async function handleLogin(values: any) {
     try {
       const data = await login(values);
-      navigate(`/${data.role === "admin" && "admin"}`);
+      window.location.href = data.role === "admin" ? "/admin" : "/" 
     } catch (err: any) {
       if (err.status == 401) {
         setLoginError(err.response.data.err);
