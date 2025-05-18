@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { login, register } from "../services/user.service";
 import {
@@ -8,34 +7,61 @@ import {
 } from "../schema/yupValidation";
 import { useScreenSize } from "../custom-hooks/screenSize";
 import HeadphonesOutlinedIcon from "@mui/icons-material/HeadphonesOutlined";
+import { FormGenerator } from "../components/login-form";
+import type { formDataModel } from "../models/form.model";
+import { useNavigate } from "react-router";
 
-function LogPage() {
+export default function LogPage() {
   const [isRegister, setIsRegister] = useState<boolean>(true);
   const [loginError, setLoginError] = useState<string>("");
   const { adminUrl } = useParams();
   const { width, height } = useScreenSize();
+  const navigate = useNavigate();
 
   const instrumentOptions = ["Guitar", "Ukilaly", "Bass", "Drum", "Singer"];
 
+  // useMemo to save operation cost
+  const initialValues = useMemo(
+    () =>
+      isRegister
+        ? { username: "", instrument: "", password: "" }
+        : { username: "", password: "" },
+    [isRegister]
+  );
+
+  const formData = useMemo(() => {
+    const baseFields: formDataModel[] = [
+      { name: "username" },
+      { name: "password", label: isRegister ? "Create Password" : "" },
+    ];
+
+    if (isRegister) {
+      baseFields.splice(1, 0, {
+        name: "instrument",
+        type: "select",
+        dataArr: instrumentOptions,
+      });
+    }
+
+    return [...baseFields, { buttonText: isRegister ? "Register" : "Log in" }];
+  }, [isRegister, instrumentOptions]);
+
+  // login form submit handling
   async function handleRegister(values: any) {
     try {
       await register(values, adminUrl);
       console.log(values, adminUrl);
-      adminUrl
-        ? (window.location.href = "/admin")
-        : (window.location.href = "/");
+      navigate(`/${adminUrl && "admin"}`);
     } catch (err) {
       console.error("Register error:", err);
     }
   }
 
+  // login form submit handling
   async function handleLogin(values: any) {
     try {
       const data = await login(values);
-      console.log(data);
-      data.role === "admin"
-        ? (window.location.href = "/admin")
-        : (window.location.href = "/");
+      navigate(`/${data.role === "admin" && "admin"}`);
     } catch (err: any) {
       if (err.status == 401) {
         setLoginError(err.response.data.err);
@@ -47,100 +73,45 @@ function LogPage() {
   const toggleState = () => setIsRegister(!isRegister);
 
   return (
-    <section className="login-page-container">
-      <Formik
-        initialValues={
-          isRegister
-            ? { username: "", instrument: "", password: "" }
-            : { username: "", password: "" }
-        }
+    <section className="h-view login-page-container">
+      {/* custom form generator with many jsx input possibilities */}
+      <FormGenerator
+        handleSubmit={isRegister ? handleRegister : handleLogin}
         validationSchema={
           isRegister ? regValidationSchema : loginValidationSchema
         }
-        onSubmit={isRegister ? handleRegister : handleLogin}
-      >
-        {({ isSubmitting }) => (
-          <Form className="main-log-form">
-            {width < 800 || height < 600 ? (
+        initialValues={initialValues}
+        headerChildren={[
+          () =>
+            width < 800 || height < 600 ? (
               <section className="login-title">
                 <HeadphonesOutlinedIcon style={{ fontSize: 60 }} />
                 <h1>JAMOVEO</h1>
               </section>
             ) : (
               ""
-            )}
-            <div className="form-body">
-              <header>
-                <h3>Welcome to jaMoveo!</h3>
-                <h1>{isRegister ? "Register" : "Log In"}</h1>
-              </header>
-              <section className="form-data">
-                {loginError ? <p className="error-msg">{loginError}</p> : ""}
-                <div className="username-section form-section">
-                  <label htmlFor="username">Username*</label>
-                  <Field
-                    name="username"
-                    type="text"
-                    placeholder="Enter your username"
-                  />
-                  <ErrorMessage
-                    name="username"
-                    component="div"
-                    className="error-msg"
-                  />
+            ),
+          () => (
+            <header>
+              <h3>Welcome to jaMoveo!</h3>
+              <h1>{isRegister ? "Register" : "Log In"}</h1>
+            </header>
+          ),
+          () => loginError ? <p className="error-msg">{loginError}</p> : "",
+        ]}
+        formData={formData}
+        footerChildren={[
+          () =>
+            isRegister ? (
+              <section className="rememberMe">
+                <div>
+                  <input type="checkbox" />
+                  <p>Remember me</p>
                 </div>
-
-                {isRegister && (
-                  <div className="instrument-section form-section">
-                    <label htmlFor="instrument">Your instrument*</label>
-                    <Field name="instrument" as="select">
-                      <option value="">Select your instrument</option>
-                      {instrumentOptions.map((instrument) => (
-                        <option key={instrument} value={instrument}>
-                          {instrument}
-                        </option>
-                      ))}
-                    </Field>
-                    <ErrorMessage
-                      name="instrument"
-                      component="div"
-                      className="error-msg"
-                    />
-                  </div>
-                )}
-
-                <div className="password-section form-section">
-                  <label htmlFor="password">
-                    {isRegister ? "Create Password*" : "Password*"}
-                  </label>
-                  <Field
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="error-msg"
-                  />
-                </div>
+                <p>Forgot Password?</p>
               </section>
-
-              {!isRegister && (
-                <section className="rememberMe">
-                  <div>
-                    <input type="checkbox" />
-                    <p>Remember me</p>
-                  </div>
-                  <p>Forgot Password?</p>
-                </section>
-              )}
-            </div>
-
-            <button type="submit" disabled={isSubmitting}>
-              {isRegister ? "Register" : "Log In"}
-            </button>
-
+            ) : null,
+          () => (
             <section className="login-question">
               <p>
                 {isRegister
@@ -151,13 +122,13 @@ function LogPage() {
                 {isRegister ? "Log In" : "Register"}
               </p>
             </section>
-          </Form>
-        )}
-      </Formik>
+          ),
+        ]}
+      />
       {width < 800 || height < 600 ? (
         ""
       ) : (
-        <div className="image-side">
+        <div className="h-prec-size image-side">
           <img
             src={`images/${
               isRegister ? "register-image.png" : "login-image.png"
@@ -168,5 +139,3 @@ function LogPage() {
     </section>
   );
 }
-
-export default LogPage;

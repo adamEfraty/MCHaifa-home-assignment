@@ -1,5 +1,6 @@
 import MainHeader from "../components/header.comp";
 
+// Layout for live and admin page
 function MainPageLayout({ childComponent }: any) {
   const ChildComponent = () => childComponent
   return (

@@ -5,6 +5,7 @@ const BASE_URL =
 
 const axios = Axios.create({ withCredentials: true });
 
+// http req handler
 export const httpService = {
   get(endpoint:string, data:any) {
     return ajax(endpoint, "GET", data);

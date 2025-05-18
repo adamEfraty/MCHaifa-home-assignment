@@ -1,13 +1,21 @@
-@use "login-page";
-@use "main-page";
-@use "main-header";
-@use "admin-page";
+// variables:
+@use "./abstracts/variables";
 
+// utilities
+@use "./utilities.scss";
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing:border-box;
+// components:
+@use "./components/main-header.scss";
+
+// pages:
+@use "./pages/login-page.scss";
+@use "./pages/main-page.scss";
+@use "./pages/admin-page.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .error-msg {
@@ -16,7 +24,8 @@
   margin-top: 4px;
 }
 
-body, html {
+body,
+html {
   padding: 0;
   margin: 0;
   width: 100%;

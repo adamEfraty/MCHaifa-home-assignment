@@ -1,17 +1,12 @@
+@use '../abstracts/variables' as *;
+
 .main-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background: #0d0402;
   height: 64px;
-  justify-content: space-between;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   border-bottom-width: 1.5px;
-  padding-top: 12px;
-  padding-right: 48px;
-  padding-bottom: 12px;
-  padding-left: 48px;
+  padding: 12px 48px;
   img {
     border-radius: 50%;
     width: 40px;
@@ -19,13 +14,10 @@
   }
 
   .JaMoveo-logo {
-    display: flex;
-    align-items: center;
     gap: 8px;
-    color: #ffcd29;
+    color: $primary-color;
     font-weight: 600;
     font-size: 28px;
-    leading-trim: Cap height;
     line-height: 100%;
   }
 }

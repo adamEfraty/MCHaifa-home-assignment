@@ -21,11 +21,13 @@ function LivePageComponent({
   const navigate = useNavigate();
   const { width } = useScreenSize();
 
+  // Creates scrolling movment for song lyrics
   useEffect(() => {
     if (!scrollRef.current || !scrolling || !song) return;
 
     if (scrollInterval.current) clearInterval(scrollInterval.current);
 
+    // Interval to advance lyrics position smoothly
     scrollInterval.current = setInterval(() => {
       if (scrollRef.current && scrollingRef.current) {
         scrollRef.current.scrollBy({ top: 1, behavior: "smooth" });
@@ -59,15 +61,17 @@ function LivePageComponent({
     scrollingRef.current = true;
   };
 
+  // Tenerary operation for active and unactive conditional rendering
   return song ? (
-    <section className="inner-main">
-      <section className={`song-header ${width < 500 ? "column" : ""}`}>
+    <section className="columned-flex flex-center inner-main">
+      <section className={`flex song-header ${width < 500 ? "column" : ""}`}>
+        {/* handleLongText exists to shorten words too big for screen size */}
         <h2 className="title">{handleLongText(song.title, width / 1.8)}</h2>
         <h2>{song.artist}</h2>
       </section>
       <section className="song-display" ref={scrollRef}>
         {song.songLines.map((line, lineIndex) => (
-          <div key={lineIndex}>
+          <div className="columned-flex" key={lineIndex}>
             {instrument !== "Singer" && line.chords && (
               <span className="chords">{line.chords}</span>
             )}
@@ -83,7 +87,7 @@ function LivePageComponent({
       </section>
     </section>
   ) : (
-    <section className="inner-main dashed-border">
+    <section className="columned-flex flex-center inner-main dashed-border">
       <div>
         <img width={125} src="images/song-icon.png" />
         <h2 className="waiting-msg">Waiting for next song...</h2>

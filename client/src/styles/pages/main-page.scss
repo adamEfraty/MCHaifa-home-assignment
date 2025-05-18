@@ -1,11 +1,10 @@
+@use "../abstracts/variables" as *;
+
 .main-page {
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
   .inner-main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 80%;
     width: 80%;
     margin: 2.5% auto;
@@ -13,6 +12,8 @@
     border-radius: 12px;
     background-color: transparent;
     text-align: center;
+    padding: 1rem;
+    background-color: #fdfdfd;
 
     .waiting-msg {
       color: #1f2d3d !important; // or any dark color that contrasts your background
@@ -23,7 +24,6 @@
     }
 
     .song-header {
-      display: flex;
       width: 100%;
       justify-content: space-between;
       padding: 8px;
@@ -53,14 +53,6 @@
   }
 }
 
-.inner-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  background-color: #fdfdfd;
-}
-
 .song-display {
   height: 85%;
   overflow-y: hidden;
@@ -71,8 +63,6 @@
   font-family: sans-serif;
 
   div {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     margin-bottom: 1rem;
     font-size: 1.5rem;
@@ -105,30 +95,29 @@
   }
 }
 
-
-  @media (max-width: 600px) {
-    .chords {
-      font-size: 14px;
-    }
-    .lyrics {
-      font-size: 14px;
-    }
+@media (max-width: 600px) {
+  .chords {
+    font-size: 14px;
   }
-
-  @media (max-width: 400px) {
-    .chords {
-      font-size: 12px;
-    }
-    .lyrics {
-      font-size: 12px;
-    }
+  .lyrics {
+    font-size: 14px;
   }
+}
 
-    @media (max-width: 350px) {
-    .chords {
-      font-size: 10px;
-    }
-    .lyrics {
-      font-size: 10px;
-    }
+@media (max-width: 400px) {
+  .chords {
+    font-size: 12px;
   }
+  .lyrics {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 350px) {
+  .chords {
+    font-size: 10px;
+  }
+  .lyrics {
+    font-size: 10px;
+  }
+}
